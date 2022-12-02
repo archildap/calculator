@@ -32,9 +32,12 @@ const equalOper = document.querySelector('.equals');
 const dispNum = document.querySelector('.num');
 const btnClear = document.querySelector('.clear');
 
+
 buttons.forEach(num => {
   num.addEventListener('click', e => {
-    dispNum.textContent += num.textContent;
+    if(dispNum.textContent.length <= 15) {
+      dispNum.textContent += num.textContent;
+    }    
   });
 });
 
@@ -45,7 +48,12 @@ let op;
 operators.forEach(op => {
   op.addEventListener('click', e => {
     num1 = dispNum.textContent;
-    dispNum.textContent += op.textContent;
+    if(dispNum.textContent.charAt(dispNum.textContent.length - 1) != '+' &&
+     dispNum.textContent.charAt(dispNum.textContent.length - 1) != '-' && dispNum.textContent.charAt(dispNum.textContent.length - 1) != '*' && 
+     dispNum.textContent.charAt(dispNum.textContent.length - 1) != '/') {
+      dispNum.textContent += op.textContent;
+     }
+    
   });
 });
 
@@ -53,7 +61,10 @@ equalOper.addEventListener('click', e => {
   arrayNum = dispNum.textContent.split('');
   num2 = arrayNum.slice(num1.length + 1).join('');
   op = arrayNum.slice(num1.length, num1.length + 1).join('');
-  dispNum.textContent = operate(op, +num1, +num2);
+  if(num1 != '' && num2 != '') {
+    dispNum.textContent = operate(op, +num1, +num2);
+  }  
+  num1 = dispNum.textContent;  
 });
 
 btnClear.addEventListener('click', e => {
